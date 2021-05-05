@@ -27,24 +27,34 @@ struct Person{
 // End struct declaration
 
 // Function prototypes
-
 void show_welcomeMsg();
 
-int user_input();
+void show_goodbyeMsg();
 
-bool menu_loop(bool, Person*);
+int user_input();                                   // Utility -- user input
 
-Person* sort_bySSN(struct Person**);
+bool menu_loop(bool, Person*);                      // Main menu
 
-Person* delete_Person(Person**);
+Person* populate_Person(string);                    // Initial dataset
 
-Person* input_newPerson(Person**);
+struct Person* swap_Person(struct Person*,          // Utility -- swap nodes
+                           struct Person*);
 
-Person* add_bulkPerson(Person**);
+int get_nodeCount(Person*);                         // Utility
 
-void edit_PersonData(Person*);
+void print_PersonNodes(Person*);                    // Utility
 
-void display_Eligibility(Person*);
+Person* sort_bySSN(struct Person**);                // Option 1
+
+Person* delete_Person(Person**);                    // Option 2
+
+Person* input_newPerson(Person**);                  // Option 3
+
+Person* add_bulkPerson(Person**);                   // Option 4
+
+void edit_PersonData(Person*);                      // Option 5
+
+void display_Eligibility(Person*);                  // Option 6
 
 Person* option_seven(Person*);
 
@@ -57,17 +67,6 @@ Person* option_ten(Person*);
 Person* option_eleven(Person*);
 
 Person* option_twelve(Person*);
-
-void show_goodbyeMsg();
-
-void print_PersonNodes(Person*); 
-
-Person* populate_Person(string);
-
-struct Person* swap_Person(struct Person*, struct Person*);
-
-int get_nodeCount(Person*);
-
 // End function prototypes
 
 // Driver
@@ -82,11 +81,9 @@ int main() {
     string fileName = "persondata.txt"; // Modularize filename for both file 
                                         // function calls; initialize to file 1
                                         // Change to "supplement.txt" in #4 call
-    
     // End var declarations
     
     // Initialize Struct 
-    
     Person* head = new Person;  // Independent person
     head -> next = NULL;
     // End Struct initialization
@@ -94,6 +91,7 @@ int main() {
     // Populate Struct w/ start file -- first "module" before calling menu
     head = populate_Person(fileName);
 
+    // Initial list sort
     sort_bySSN(&head);
     
     // Initial List Print            
@@ -113,7 +111,9 @@ int main() {
 
 // Function definitions
 
-//Utility function to get person count
+// Utility function to get person count
+// Parameters: Person* (head)
+// Returns: Int (# of nodes)
 int get_nodeCount(Person* head) {
     
     Person* temp = head;
@@ -130,6 +130,8 @@ int get_nodeCount(Person* head) {
 }
 
 // Utility function to swap for sorting
+// Parameters: Person* node
+// Returns: Second Person* node as defined when called
 struct Person* swap_Person(struct Person* nodeOne, struct Person* nodeTwo) {
     
     struct Person* temp = nodeTwo -> next;
@@ -142,6 +144,8 @@ struct Person* swap_Person(struct Person* nodeOne, struct Person* nodeTwo) {
 }
 
 // Instantiate new person from user input and insert into sorted list
+// Parameters: Person** (reference pointer to head)
+// Returns: Person* (head)
 Person* input_newPerson(Person** head) {
     
     string currentLine;
@@ -280,11 +284,8 @@ Person* sort_bySSN(struct Person** head) {
         }
     }
       
-    cout << PersonCount << endl;
-    
     return *head;
 }
-
 
 // Display all persons eligible for social security
 // Parameters: Pointer to head of person struct
@@ -653,7 +654,7 @@ bool menu_loop(bool quit, Person* head) {
 }    
 
 // Populate persons from file and return person count
-// Parameters: String
+// Parameters: String -- initial file of 20 people (persondata.txt)
 // Returns: Person*
 Person* populate_Person(string fileName) {
     
@@ -727,7 +728,7 @@ Person* populate_Person(string fileName) {
 }
 
 // Populate persons from file and return person count
-// Parameters: String, Person*, Person*, Person*
+// Parameters: Person** (reference pointer to head)
 // Returns: Person*
 Person* add_bulkPerson(Person** head) {
     
@@ -739,8 +740,6 @@ Person* add_bulkPerson(Person** head) {
     while (current -> next != NULL) {
         current = current -> next;
     } 
-    
-    cout << current -> personName << endl;
     
     ifstream dataFile;
     dataFile.open(fileName);
