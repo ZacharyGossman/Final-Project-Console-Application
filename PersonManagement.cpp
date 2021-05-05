@@ -56,7 +56,11 @@ void edit_PersonData(Person*);                      // Option 5
 
 void display_Eligibility(Person*);                  // Option 6
 
-Person* option_seven(Person*);
+Person* cardiovascularDetermining(Person*);         // Option 7
+
+float get_BMI(Person*);                             // Gets BMI
+
+void sort_BMI(Person*);                             // Sorts BMI
 
 Person* option_eight(Person*);
 
@@ -565,7 +569,7 @@ bool menu_loop(bool quit, Person* head) {
     cout << "4: Add New Persons From Supplemental File" << endl;
     cout << "5: Edit Person Data" << endl;
     cout << "6: Display all persons eligible for social security" << endl;
-    cout << "7: " << endl;
+    cout << "7: Display all people at high risk for cardiovascular disease." << endl;
     cout << "8: " << endl;
     cout << "9: Display the parents of a person" << endl;
     cout << "10: " << endl;
@@ -590,7 +594,7 @@ bool menu_loop(bool quit, Person* head) {
                 cout << "4: Add New Persons From Supplemental File" << endl;
                 cout << "5: Edit Person data" << endl;
                 cout << "6: Display all persons eligible for social security" << endl;
-                cout << "7: " << endl;
+                cout << "7: Display all people at high risk for cardiovascular disease." << endl;
                 cout << "8: " << endl;
                 cout << "9: Display the parents of a person" << endl;
                 cout << "10: " << endl;
@@ -667,7 +671,7 @@ bool menu_loop(bool quit, Person* head) {
         
             case 7:
             
-                cout << "Option 7" << endl;
+                cout << "7: Display all people at high risk for cardiovascular disease." << endl;
             
                 head = option_seven(head);
             
@@ -857,14 +861,67 @@ Person* add_bulkPerson(Person** head) {
     return *head;
 }
 
-// Option 7
-// Parameters: Pointer to head of person struct
-// Returns: Pointer to head of person struct
-Person* option_seven(Person* head) {
+Person* cardiovascularDetermining(Person* head) {
+   Person* current = head;
+   int person1;
+   int BMI;
+   
+   
+  while (current->next != NULL)
+   {
+   
+   if(BMI >= 27)
+        {
+            cout << current->personName << ": BMI: " << get_BMI(head) << " is at risk for cardiovascular disease." << '\n';
+            current = current->next;
+        }
+   }
+}
+
+float get_BMI(Person* head) 
+{
+    int person1;
+    int BMI;
+    Person* current = head;
     
-    cout << "Fnct 7" << endl;
-    
-    return head;
+    while(current->next != NULL)
+    {
+     cout << current->personName << " has "
+    	  << ((current->personWeight) * 0.45) / (((current->personHeight) * 0.0254) * ((current->personHeight) * 0.0254))
+	      << " as their BMI." << endl;
+	  
+	  current = current->next;
+    }
+}
+
+void sort_BMI(Person* head)
+{
+    Person* index = NULL;
+    Person* current = head;
+    Person* tmp = current;
+    get_BMI(head);
+
+    while (current->next = NULL)
+    {
+
+         // Node index will point to node next to current
+        index = current->next;
+
+        while (index != NULL)
+        {
+            // if current nod's data is greater then index's node data
+            if (current->data < index->data)
+            {
+                tmp = index->data;
+                current->data = tmp;
+            }
+            index = index->next;
+        }
+
+        current = current->next;
+    }
+
+    return;
 }
 
 // Option 8
