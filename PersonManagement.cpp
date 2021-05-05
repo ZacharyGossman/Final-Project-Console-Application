@@ -1,5 +1,5 @@
 /******************************************************************************
-05/04/21
+05/05/21
 *******************************************************************************/
 #include <iostream>
 #include <string>
@@ -60,7 +60,7 @@ Person* option_seven(Person*);
 
 Person* option_eight(Person*);
 
-Person* option_nine(Person*);
+void display_Parents(Person*);                      // Option 9
 
 Person* option_ten(Person*);
 
@@ -142,6 +142,77 @@ struct Person* swap_Person(struct Person* nodeOne, struct Person* nodeTwo) {
 
     return nodeTwo;
 }
+
+
+// Find and print Parents of a person
+// Parameters: Pointer to head of person struct
+// Returns: Void
+void display_Parents(Person* head)
+{
+    Person* targetPerson{head};
+    Person* current{head};
+    
+    string currentLine{0};
+    long searchSSN{0};
+    
+    cin.ignore();
+    
+    cout << "\nEnter the SSN of a person to find their Mother and Father " << endl;
+    getline(cin,currentLine);
+    
+    searchSSN = stol(currentLine);
+    
+    
+    while(current->next != NULL) // Associate entered SSN with actual person Node
+    {
+        if(searchSSN == current->personSSN)
+        {
+            std::cout<< "\nSSN entered matches " << current->personName << "\n\n";
+            break;
+        }
+             
+        
+        current = current->next;
+    }
+    
+    targetPerson = current;
+    
+    current = head; // Reset to the begining of the person list
+    
+    std::cout<< targetPerson->personName << " Parents: \n";
+    
+    while(current->next != NULL) // Compare target person's Mother SSN to the SSN of everyone else
+    {
+        if(targetPerson->motherSSN == current->personSSN)
+        {
+            std::cout<< "Mother: " << current->personName << '\n';
+            break;
+        }
+        
+        current = current->next;
+    }
+    
+    if(current->next == NULL)
+        std::cout<< " Mother is not on the list\n\n";
+    
+    current = head; // Reset to the begining of the person list
+    
+    while(current->next != NULL) // Compare target person's father SSN to the SSN of everyone else
+    {
+        if(targetPerson->fatherSSN == current->personSSN)
+        {
+            std::cout<< "Father: " << current->personName << "\n\n";
+            break;
+        }
+    
+        current = current->next;
+    }
+    
+    if(current->next == NULL)
+        std::cout<< "Father is not on the list\n\n";
+    
+}
+
 
 // Instantiate new person from user input and insert into sorted list
 // Parameters: Person** (reference pointer to head)
@@ -496,7 +567,7 @@ bool menu_loop(bool quit, Person* head) {
     cout << "6: Display all persons eligible for social security" << endl;
     cout << "7: " << endl;
     cout << "8: " << endl;
-    cout << "9: " << endl;
+    cout << "9: Display the parents of a person" << endl;
     cout << "10: " << endl;
     cout << "11: " << endl;
     cout << "12: " << endl;
@@ -521,7 +592,7 @@ bool menu_loop(bool quit, Person* head) {
                 cout << "6: Display all persons eligible for social security" << endl;
                 cout << "7: " << endl;
                 cout << "8: " << endl;
-                cout << "9: " << endl;
+                cout << "9: Display the parents of a person" << endl;
                 cout << "10: " << endl;
                 cout << "11: " << endl;
                 cout << "12: " << endl;
@@ -588,7 +659,7 @@ bool menu_loop(bool quit, Person* head) {
         
             case 6:
             
-                cout << "Display all persons eligible for social security" << endl;
+                cout << " Option 6: Display all persons eligible for social security" << endl;
             
                 display_Eligibility(head);
             
@@ -612,9 +683,9 @@ bool menu_loop(bool quit, Person* head) {
             
             case 9:
             
-                cout << "Option 9" << endl;
+                cout << "Option 9: Display the parents of a person" << endl;
             
-                head = option_nine(head);
+                display_Parents(head);
             
                 break;
             
