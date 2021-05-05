@@ -56,7 +56,9 @@ void edit_PersonData(Person*);                      // Option 5
 
 void display_Eligibility(Person*);                  // Option 6
 
-Person* option_seven(Person*);
+Person* cardiovascularDetermining(Person*);	    // Option 7
+
+int getRBMI(int, int, person[]);		    // Gets RBMI    
 
 Person* option_eight(Person*);
 
@@ -67,6 +69,7 @@ Person* option_ten(Person*);
 Person* option_eleven(Person*);
 
 Person* option_twelve(Person*);
+
 // End function prototypes
 
 // Driver
@@ -81,6 +84,9 @@ int main() {
     string fileName = "persondata.txt"; // Modularize filename for both file 
                                         // function calls; initialize to file 1
                                         // Change to "supplement.txt" in #4 call
+    
+    int person1;			// Person variable for getRBMI
+    int person2;			// Person Variable for getRBMI
     // End var declarations
     
     // Initialize Struct 
@@ -789,12 +795,34 @@ Person* add_bulkPerson(Person** head) {
 // Option 7
 // Parameters: Pointer to head of person struct
 // Returns: Pointer to head of person struct
-Person* option_seven(Person* head) {
+Person* cardiovascularDetermining(Person* head) {
     
-    cout << "Fnct 7" << endl;
-    
+    Person* current{head};
+
+    while(current->next != NULL)
+    {
+        if(BMI >= 27)
+        {
+            std::cout<< current->personName << ": BMI: " << get_BMI << " is at risk for cardiovascular disease." << '\n';
+        }
+        
+        current = current->next;
+    }
+	
     return head;
 }
+
+float get_BMI(int person1, person pArray[], ifstream fileName) 
+{
+    while(!fileName.eof())
+    {
+     cout << person << " has "
+    	  << ((person.weight) * 0.45) / (((person.height) * 0.0254) * ((person.height) * 0.0254))
+	  << " as their BMI.";
+    }
+	
+    return BMI;
+}  
 
 // Option 8
 // Parameters: Pointer to head of person struct
@@ -852,4 +880,4 @@ Person* option_twelve(Person* head) {
 void show_goodbyeMsg() {                                                              
 	cout << endl << "Thank you for using the Person Struct Linked List " 
 	     << "Manager!" << endl;
-}
+}  
